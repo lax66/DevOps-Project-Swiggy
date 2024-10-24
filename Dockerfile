@@ -14,8 +14,10 @@ RUN npm install
 
 # Copy the application code
 COPY . .
+# Ensure appuser has permissions to write to /app
+RUN chown -R appuser:appgroup /app
 USER appuser
-# Buildinf of the React app
+# Building of the React app
 RUN npm run build
 
 # Expose port 3000 to access app
