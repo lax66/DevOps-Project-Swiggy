@@ -1,8 +1,10 @@
 # Using Node.js 16 as the base image
-FROM node:16
+FROM node:16-alpine
 
 # Setting up the working directory
 WORKDIR /app
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copying the package.json and package-lock.json files to the working directory
 COPY package*.json ./
@@ -12,7 +14,7 @@ RUN npm install
 
 # Copy the application code
 COPY . .
-
+USER appuser
 # Buildinf of the React app
 RUN npm run build
 
